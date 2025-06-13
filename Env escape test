@@ -103,7 +103,7 @@ for _, result in ipairs(escape_results) do
 end
 
 if successful_escapes == 0 and profiling_result:find("❌") then
-    print("\nBased off of " .. --[[.. total_escapes .. lel ]] "7 env escapes and script profiling tested, you seem pretty safe!")
+    print("\nBased off of " .. --[[.. total_escapes .. lel ]] "7 env escapes, you seem pretty safe!")
 else
     local success_percent = (successful_escapes / total_escapes) * 100
     print("\nWarning! " .. successful_escapes .. " out of " .. total_escapes .. " env escapes passed (" .. success_percent .. "%). Additionally, " .. profiling_result .. ". You might be at risk and should take precautions!")
