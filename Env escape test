@@ -1,3 +1,5 @@
+print("If it gives an error about linking service and stuff just remove these first 2 lines below the print (linking service and scriptcontext) so the rest of the test can run!")
+
 local LinkingService = game:GetService("LinkingService")
 local ScriptContext = game:GetService("ScriptContext")
 
@@ -10,10 +12,10 @@ if pcall(function()
     local game = workspace.Terrain.Parent.Parent
     game:OpenScreenshotsFolder()
 end) then
-    table.insert(escape_results, ":warning: old xeno paste env escape, WARNING, this env escape passed! This means you're vulnerable and need to take precautions!")
+    table.insert(escape_results, "⚠️ old xeno paste env escape, WARNING, this env escape passed! This means you're vulnerable and need to take precautions!")
     successful_escapes = successful_escapes + 1
 else
-    table.insert(escape_results, ":x: old xeno paste env escape")
+    table.insert(escape_results, "❌ old xeno paste env escape")
 end
 
 print("Running env escape V1")
@@ -22,10 +24,10 @@ if pcall(function()
     getfenv().game = nil
     game:OpenScreenshotsFolder()
 end) then
-    table.insert(escape_results, ":warning: env escape V1, WARNING, this env escape passed! This means you're vulnerable and need to take precautions!")
+    table.insert(escape_results, "⚠️ env escape V1, WARNING, this env escape passed! This means you're vulnerable and need to take precautions!")
     successful_escapes = successful_escapes + 1
 else
-    table.insert(escape_results, ":x: env escape V1")
+    table.insert(escape_results, "❌ env escape V1")
 end
 
 print("Running env escape V3")
@@ -34,10 +36,10 @@ if pcall(function()
     newenv.game = nil
     newenv.game:OpenScreenshotsFolder()
 end) then
-    table.insert(escape_results, ":warning: env escape V3, WARNING, this env escape passed! This means you're vulnerable and need to take precautions!")
+    table.insert(escape_results, "⚠️ env escape V3, WARNING, this env escape passed! This means you're vulnerable and need to take precautions!")
     successful_escapes = successful_escapes + 1
 else
-    table.insert(escape_results, ":x: env escape V3")
+    table.insert(escape_results, "❌ env escape V3")
 end
 
 print("Running env escape V4")
@@ -46,10 +48,10 @@ if pcall(function()
     s.game = nil
     s.game:OpenScreenshotsFolder()
 end) then
-    table.insert(escape_results, ":warning: env escape V4, WARNING, this env escape passed! This means you're vulnerable and need to take precautions!")
+    table.insert(escape_results, "⚠️ env escape V4, WARNING, this env escape passed! This means you're vulnerable and need to take precautions!")
     successful_escapes = successful_escapes + 1
 else
-    table.insert(escape_results, ":x: env escape V4")
+    table.insert(escape_results, "❌ env escape V4")
 end
 
 print("Running env escape V5")
@@ -62,21 +64,36 @@ if pcall(function()
     end)
     getfenv(f).game:OpenScreenshotsFolder()
 end) then
-    table.insert(escape_results, ":warning: env escape V5, WARNING, this env escape passed! This means you're vulnerable and need to take precautions!")
+    table.insert(escape_results, "⚠️ env escape V5, WARNING, this env escape passed! This means you're vulnerable and need to take precautions!")
     successful_escapes = successful_escapes + 1
 else
-    table.insert(escape_results, ":x: env escape V5")
+    table.insert(escape_results, "❌ env escape V5")
 end
+
+print("Running env escape V6")
+if pcall(function()
+    local bindableEvent = Instance.new("BindableEvent")
+    task.defer(bindableEvent.Fire, bindableEvent, game)
+    local rawGame = bindableEvent.Event:Wait()
+    rawGame:OpenScreenshotsFolder()
+        table.insert(escape_results, "⚠️ env escape V6, WARNING, This env escape passed! This means you're vulnerable and need to take precautions!")
+        successful_escapes = successful_escapes +1
+    end) then
+else
+    table.insert(escape_results, "❌ env escape V6")
+end
+
+
 
 print("Attempting to open notepad via a script profiling method...")
 local profiling_result = ""
 if pcall(function()
     LinkingService:OpenUrl(ScriptContext:SaveScriptProfilingData([[START C:\WINDOWS\system32\notepad.exe]], "ok.bat"))
 end) then
-    profiling_result = ":warning: Script profiling method executed successfully! WARNING, this indicates a vulnerability that should be addressed! Especially considering this is a very known method!"
+    profiling_result = "⚠️ Script profiling method executed successfully! WARNING, this indicates a vulnerability that should be addressed! Especially considering this is a very known method!"
     successful_escapes = successful_escapes + 1 
 else
-    profiling_result = ":x: Script profiling method failed or was blocked, which is a good sign!"
+    profiling_result = "❌ Script profiling method failed or was blocked, which is a good sign!"
 end
 table.insert(escape_results, profiling_result)
 
@@ -85,8 +102,8 @@ for _, result in ipairs(escape_results) do
     print(result)
 end
 
-if successful_escapes == 0 and profiling_result:find(":x:") then
-    print("\nBased off of " .. total_escapes .. " env escapes and script profiling tested, you seem pretty safe!")
+if successful_escapes == 0 and profiling_result:find("❌") then
+    print("\nBased off of " .. --[[.. total_escapes .. lel ]] "7 env escapes and script profiling tested, you seem pretty safe!")
 else
     local success_percent = (successful_escapes / total_escapes) * 100
     print("\nWarning! " .. successful_escapes .. " out of " .. total_escapes .. " env escapes passed (" .. success_percent .. "%). Additionally, " .. profiling_result .. ". You might be at risk and should take precautions!")
